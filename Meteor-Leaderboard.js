@@ -3,7 +3,7 @@ if(Meteor.isClient){
 	
  Template.leaderboard.helpers({
     'player': function(){
-        return PlayersList.find()
+        return PlayersList.find({}, {sort: {score: -1, name: 1} })
     },
    'selectedClass': function(){ 
    	   var playerId = this._id;
@@ -13,7 +13,11 @@ if(Meteor.isClient){
    } ,
    'numberOfPlayers': function(){
    return PlayersList.find().count();
-   }
+   },
+   'showSelectedPlayer': function(){
+   	   var selectedPlayer = Session.get('selectedPlayer');
+   	   return PlayersList.findOne(selectedPlayer)
+}
   });
 
   Template.leaderboard.events({
@@ -23,11 +27,19 @@ if(Meteor.isClient){
         // var selectedPlayer = Session.get('selectedPlayer');
         // console.log(selectedPlayer);
     },
-       'dblclick .player': function(){
-      console.log("You DOUBLE clicked a .player element");
+       // 'dblclick .player': function(){
+      // console.log("You DOUBLE clicked a .player element");
+    // },
+    //   'mouseover .player': function(){
+    //  console.log("The mouse is over a .player element");
+    // }
+    'click .increment': function(){
+    	var selectedPlayer = Session.get('selectedPlayer');
+    	PlayersList.update(selectedPlayer, {$inc: {score: 5} });
     },
-       'mouseover .player': function(){
-      console.log("The mouse is over a .player element");
+       'click .decrement': function(){
+    	var selectedPlayer = Session.get('selectedPlayer');
+    	PlayersList.update(selectedPlayer, {$inc: {score: -5} });
     }
     
   });
