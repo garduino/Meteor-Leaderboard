@@ -10,7 +10,10 @@ if(Meteor.isClient){
    	   var selectedPlayer = Session.get('selectedPlayer');
    	   if(playerId == selectedPlayer){
    	   return "selected" }
-   }  
+   } ,
+   'numberOfPlayers': function(){
+   return PlayersList.find().count();
+   }
   });
 
   Template.leaderboard.events({
