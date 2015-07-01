@@ -56,6 +56,8 @@ if(Meteor.isClient){
   	 		 name: playerNameVar,
   	 		 score: 0
   	 		});
+  	 // pedido en el summary, resetear playerName field a un valor vacío.
+  	 event.target.playerName.value = '';
   		  }
   });
 	
