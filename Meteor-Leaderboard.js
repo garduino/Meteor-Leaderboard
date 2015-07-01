@@ -52,12 +52,14 @@ if(Meteor.isClient){
   'submit form': function(event){
   	  event.preventDefault();
   	  var playerNameVar = event.target.playerName.value;
+  	  var playerScoreVar = event.target.playerScore.value;
   	 PlayersList.insert({
   	 		 name: playerNameVar,
-  	 		 score: 0
+  	 		 score: playerScoreVar,
   	 		});
   	 // pedido en el summary, resetear playerName field a un valor vacío.
   	 event.target.playerName.value = '';
+  	 event.target.playerScore.value = 0;
   		  }
   });
 	
