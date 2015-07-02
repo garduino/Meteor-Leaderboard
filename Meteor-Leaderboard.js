@@ -73,8 +73,8 @@ if(Meteor.isClient){
   	 //		});
   	 // pedido en el summary, resetear playerName field a un valor vac�o.
   	 Meteor.call('insertPlayerData', playerNameVar, playerScoreVar);
-  	 //event.target.playerName.value = '';
-  	 //event.target.playerScore.value = 0;
+  	 event.target.playerName.value = '';
+  	 event.target.playerScore.value = 0;
   		  }
   });
    
