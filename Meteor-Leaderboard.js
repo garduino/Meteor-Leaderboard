@@ -3,10 +3,15 @@ if(Meteor.isClient){
 	
  Template.leaderboard.helpers({
     'player': function(){
-    	// return PlayersList.find({}, {sort: {score: -1, name: 1} })
         // With the following code, only the users created by the current user are displayed
-        var currentUserId = Meteor.userId();
-        return PlayersList.find({createdBy: currentUserId},{sort: {score: -1, name: 1}});
+        // var currentUserId = Meteor.userId();
+        // return PlayersList.find({createdBy: currentUserId},{sort: {score: -1, name: 1}});
+	// After put in place the feature of publishing/subscribe, is not more needed 
+        // the above way to show only records belonging to the logged user.
+        // In the book exist also the next sentence:
+        // var currentUserId = Meteor.userId();
+        // but I think is not needed because the data is already filtered for the logged user
+        return PlayersList.find({}, {sort: {score: -1, name: 1}});
     },
    'selectedClass': function(){ 
    	   var playerId = this._id;
@@ -66,17 +71,22 @@ if(Meteor.isClient){
   	 		 score: playerScoreVar,
   	 		 createdBy: currentUserId
   	 		});
-  	 // pedido en el summary, resetear playerName field a un valor vacío.
+  	 // pedido en el summary, resetear playerName field a un valor vacï¿½o.
   	 event.target.playerName.value = '';
   	 event.target.playerScore.value = 0;
   		  }
   });
-	
+
+  Meteor.subscribe('thePlayers');
 		
 }
 
 
-if(Meteor.isServer){ 
+if(Meteor.isServer){
+	Meteor.publish('thePlayers', function(){
+			var currentUserId = this.userId;
+			return PlayersList.find({createdBy: currentUserId})
+			});
 }
 
 PlayersList = new Mongo.Collection('players');
