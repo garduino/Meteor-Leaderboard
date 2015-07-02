@@ -3,7 +3,10 @@
 <body>
 <h1>Leaderboard</h1> 
 {{> loginButtons}}
+
+
 {{> leaderboard}}
+
 </body>
 
 <template name="leaderboard"> 
@@ -43,6 +46,7 @@ Selected Player: {{showSelectedPlayer.name}}
 {{#if currentUser}}
 <form>
 <input type="text" name="playerName">
+<input type="number" name="playerScore">
 <input type="submit" value="Add Player">
 </form>
 {{/if}}

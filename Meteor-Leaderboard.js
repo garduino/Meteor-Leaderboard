@@ -3,7 +3,10 @@ if(Meteor.isClient){
 	
  Template.leaderboard.helpers({
     'player': function(){
-        return PlayersList.find({}, {sort: {score: -1, name: 1} })
+    	// return PlayersList.find({}, {sort: {score: -1, name: 1} })
+        // With the following code, only the users created by the current user are displayed
+        var currentUserId = Meteor.userId();
+        return PlayersList.find({createdBy: currentUserId},{sort: {score: -1, name: 1}});
     },
    'selectedClass': function(){ 
    	   var playerId = this._id;
@@ -57,9 +60,11 @@ if(Meteor.isClient){
   	  event.preventDefault();
   	  var playerNameVar = event.target.playerName.value;
   	  var playerScoreVar = event.target.playerScore.value;
+  	  var currentUserId = Meteor.userId();
   	 PlayersList.insert({
   	 		 name: playerNameVar,
   	 		 score: playerScoreVar,
+  	 		 createdBy: currentUserId
   	 		});
   	 // pedido en el summary, resetear playerName field a un valor vacío.
   	 event.target.playerName.value = '';
