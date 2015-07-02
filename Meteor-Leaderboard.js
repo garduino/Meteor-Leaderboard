@@ -53,7 +53,8 @@ if(Meteor.isClient){
     	var selectedPlayer = Session.get('selectedPlayer');
     	
     	if (confirm('Are you sure?')) { 
- 	PlayersList.remove(selectedPlayer);
+ 	//PlayersList.remove(selectedPlayer);
+ 	Meteor.call('removePlayerData', selectedPlayer);
  		}
     	
     }
@@ -96,7 +97,13 @@ var currentUserId = Meteor.userId(); PlayersList.insert({
             name: playerNameVar,
             score: playerScoreVar,
             createdBy: currentUserId
-}); }
+}); },
+
+'removePlayerData': function(selectedPlayer){
+	var currentUserId = Meteor.userId();
+	PlayersList.remove({_id: selectedPlayer, createdBy: currentUserId});
+}
+
 });
 	
 	
