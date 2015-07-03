@@ -95,9 +95,20 @@ if(Meteor.isServer){
 
 
 Meteor.methods({ 'insertPlayerData': function(playerNameVar, playerScoreVar){
-var currentUserId = Meteor.userId(); PlayersList.insert({
+var currentUserId = Meteor.userId(); 
+// La conversión siguiente es porque no funcionaba el update del score de acuerdo a como
+// estaba en el libro, parece que por algun motivo, por más que el input type del html es
+// number meteor lo toma como string, y asi lo graba en mongo.
+// Con la conversión de abajo (multiplicando por 1) según vi en 
+//  http://javascript.about.com/library/blstrnum.htm
+// el tipo de dato queda como Undefined, pero la adición y sustracción
+// de puntos al score funcionan!
+console.log("El tipo de datos de playerScoreVar es ==> ", typeof(playerScoreVar));
+var scoreAsNumber = playerScoreVar * 1;
+console.log("El tipo de datos convertido es ==>: ", typeof(socreAsNumber));
+PlayersList.insert({
             name: playerNameVar,
-            score: playerScoreVar,
+            score: scoreAsNumber,
             createdBy: currentUserId
 }); },
 

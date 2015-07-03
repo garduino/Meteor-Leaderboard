@@ -46,7 +46,7 @@ Selected Player: {{showSelectedPlayer.name}}
 {{#if currentUser}}
 <form>
 <input type="text" name="playerName">
-<input type="number" name="playerScore">
+<input type="number" name="playerScore" min="1" max="100">
 <input type="submit" value="Add Player">
 </form>
 {{/if}}
